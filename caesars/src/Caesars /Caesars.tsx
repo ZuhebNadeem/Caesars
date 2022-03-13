@@ -1,6 +1,3 @@
-import { text } from "node:stream/consumers";
-import { type } from "os";
-import { stringify } from "querystring";
 import React, { useState } from "react";
 import "./Caesars.css";
 
@@ -34,9 +31,6 @@ export function Caesars() {
     "X",
     "Y",
     "Z",
-    "Æ",
-    "Ø",
-    "Å",
   ];
   let moveLetterLength = 0;
 
@@ -59,7 +53,7 @@ export function Caesars() {
     ).value;
   };
 
-  const encryptFile = () => {
+  const encryptDecryptFile = (encryptButtonClicked: boolean) => {
     getMoveLetterValue();
     let textFileArray: Array<string> = textFile.split("");
     let newTextValue = "";
@@ -67,26 +61,18 @@ export function Caesars() {
     for (let textFileValue of textFileArray) {
       for (var i in alphabet) {
         if (textFileValue.toLocaleUpperCase() === alphabet[i]) {
-          let index = parseInt(i) + moveLetterLength;
+          let index = 0;
+          if (encryptButtonClicked) {
+            index = parseInt(i) + moveLetterLength;
+            if (index > 27) {
+            }
+          } else {
+            index = parseInt(i) - moveLetterLength;
+          }
           newTextValue += alphabet[index];
-        } else {
-          console.log("Ikke lik");
-        }
-      }
-    }
-    setTextFile(newTextValue);
-  };
-
-  const decryptFile = () => {
-    getMoveLetterValue();
-    let textFileArray: Array<string> = textFile.split("");
-    let newTextValue = "";
-
-    for (let textFileValue of textFileArray) {
-      for (var i in alphabet) {
-        if (textFileValue.toLocaleUpperCase() === alphabet[i]) {
-          let index = parseInt(i) - moveLetterLength;
-          newTextValue += alphabet[index];
+          if (newTextValue.length === textFileArray.length) {
+            break;
+          }
         } else {
           console.log("Ikke lik");
         }
@@ -104,10 +90,10 @@ export function Caesars() {
         Antall plasser du vil flytte bokstavene i filen:
       </label>
       <input type="number" id="moveLetterXTimes" name="moveLetterXTimes" />
-      <button type="button" onClick={encryptFile}>
+      <button type="button" onClick={() => encryptDecryptFile(true)}>
         Krypter
       </button>
-      <button type="button" onClick={decryptFile}>
+      <button type="button" onClick={() => encryptDecryptFile(false)}>
         Dekrypter
       </button>
       <p>Output:{textFile}</p>
