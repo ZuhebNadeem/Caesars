@@ -31,6 +31,9 @@ export function Caesars() {
     "X",
     "Y",
     "Z",
+    "Æ",
+    "Ø",
+    "Å",
   ];
   let moveLetterLength = 0;
 
@@ -47,39 +50,66 @@ export function Caesars() {
     }
   };
 
-  const getMoveLetterValue = () => {
-    moveLetterLength = +(
-      document.getElementById("moveLetterXTimes") as HTMLInputElement
-    ).value;
-  };
-
   const encryptDecryptFile = (encryptButtonClicked: boolean) => {
     getMoveLetterValue();
     let textFileArray: Array<string> = textFile.split("");
     let newTextValue = "";
 
     for (let textFileValue of textFileArray) {
-      for (var i in alphabet) {
-        if (textFileValue.toLocaleUpperCase() === alphabet[i]) {
-          let index = 0;
-          if (encryptButtonClicked) {
-            index = parseInt(i) + moveLetterLength;
-            if (index > 27) {
+      if (textFileValue === "\n") {
+        newTextValue += "\n";
+      } else {
+        for (var i in alphabet) {
+          if (textFileValue.toLocaleUpperCase() === alphabet[i]) {
+            let index = 0;
+            if (encryptButtonClicked) {
+              index = getIndexForEncrypting(index, i);
+            } else {
+              index = getIndexForDecrypting(index, i);
+            }
+            newTextValue = setTextValue(index, newTextValue);
+            if (newTextValue.length === textFileArray.length) {
+              break;
             }
           } else {
-            index = parseInt(i) - moveLetterLength;
+            console.log("Ikke lik");
           }
-          newTextValue += alphabet[index];
-          if (newTextValue.length === textFileArray.length) {
-            break;
-          }
-        } else {
-          console.log("Ikke lik");
         }
       }
     }
     setTextFile(newTextValue);
   };
+
+  function getMoveLetterValue() {
+    moveLetterLength = +(
+      document.getElementById("moveLetterXTimes") as HTMLInputElement
+    ).value;
+  }
+
+  function getIndexForEncrypting(index: number, i: string) {
+    index = parseInt(i) + moveLetterLength;
+    if (index > 28) {
+      index = index - 29;
+    }
+    return index;
+  }
+
+  function getIndexForDecrypting(index: number, i: string) {
+    index = parseInt(i) - moveLetterLength;
+    if (index < 0) {
+      index = index + 30;
+    }
+    return index;
+  }
+
+  function setTextValue(index: number, newTextValue: string) {
+    if (index === 29) {
+      newTextValue += " ";
+    } else {
+      newTextValue += alphabet[index];
+    }
+    return newTextValue;
+  }
 
   return (
     <div id="caesars">
@@ -96,7 +126,7 @@ export function Caesars() {
       <button type="button" onClick={() => encryptDecryptFile(false)}>
         Dekrypter
       </button>
-      <p>Output:{textFile}</p>
+      <pre>Output:{textFile}</pre>
     </div>
   );
 }
