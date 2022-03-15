@@ -1,0 +1,35 @@
+I denne oppgaven skal du lage et program som leser inn en tekstﬁl og krypterer innholdet med Cæsars kode (https://no.wikipedia.org/wiki/C%C3%A6sarchiﬀer).
+
+Hvordan fungerer Cæsars kode?
+
+Cæsars kode er en enkel substitusjonskode, hvor man bytter ut hver bokstav i teksten som skal krypteres med en bokstav et gitt antall plasser lengre bort i alfabetet.
+
+Gitt at man koder ved å bruke bokstaver som er tre plasser lengre til høyre i alfabetet, vil ordet HALLO bli kodet som KDOOR. Under ser vi en illustrasjon av hvordan hver bokstav er ﬂyttet tre plasser lengre til høyre i alfabetet under.
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ | | | | ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ
+
+For å dekryptere teksten går man bare motsatt vei, og ﬂytter hver bokstav tre plasser tilbake i alfabetet. På denne måten blir antallet plasser du må ﬂytte hver bokstav nøkkelen du må vite for å dekryptere teksten.
+
+Hva slags program skal jeg lage?
+
+Dette er helt opp til deg, men programmet kan godt bare være en konsollapplikasjon som leser inn navnet på en ﬁl med tekst, et tall som forteller hvor mange plasser man skal ﬂytte hver bokstav og et ﬂagg som forteller om innholdet skal krypteres eller dekrypteres. Resultatet kan godt skrives rett til terminalvinduet. Det viktige er at programmet i det minste:
+
+1. Kan lese inn innholdet av en tekstﬁl og kryptere eller dekryptere innholdet med Cæsars kode.
+
+2. Kan ta inn et tall som bestemmer hvor mange plasser man skal ﬂytte bokstavene i alfabetet.
+
+3. Kan både kryptere og dekryptere tekst.
+
+Eksempel på hvordan en løsning kan fungere
+
+Gitt at du velger å implementere løsningen din som en konsollapplikasjon, er et mulig eksempel på hvordan programmet kan fungere vist under.
+
+Kryptering:
+
+$> caesar 7 plaintext.txt lawlyplujlgpzgæolgælhjolygvmghssgæopunz uvgvulgpzgzvgiyhålgæohægolgpzguvægkpzæøyilkgibgzvtlæopungøulawljælk pgohkgyhæolygilgmpyzægpughgåpsshnlgæohugzljvukghægyvtl tlugmyllsbgilsplålgæohæg opjogæolbgklzpyl pgjhtlgpgzh gpgjvuxølylk
+
+Dekryptering:
+
+$> caesar 7 ciphertext-shift-7.txt -d experience is the teacher of all things no one is so brave that he is not disturbed by something unexpected i had rather be first in a village than second at rome men freely believe that which they desire i came i saw i conquered
+
+I eksempelet er “caesar” programmet, eller en måte å kjøre programmet på, og ﬂagget “-d” brukes til å indikere at programmet skal dekryptere teksten.
